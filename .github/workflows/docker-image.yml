@@ -17,7 +17,8 @@ jobs:
         uses: martinbeentjes/npm-get-version-action@v1.3.1
 
       - name: Set package version as environment variable
-        run: export PACKAGE_VERSION=${{ steps.package-version.outputs.current-version}}
+        run: |
+          echo "Package Version" ${{ steps.package-version.outputs.current-version}}
 
       - name: Build the Docker image
         run: docker buildx build --platform linux/amd64 --iidfile imagename .
