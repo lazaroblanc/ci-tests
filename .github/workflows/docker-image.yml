@@ -26,7 +26,7 @@ jobs:
       - name: Tag the Docker image
         run: |
           docker tag $(cat imagename) ghcr.io/$GITHUB_REPOSITORY:$PACKAGE_VERSION
-          docker tag $(cat imagename) ghcr.io/$GITHUB_REPOSITORY:latest"
+          docker tag $(cat imagename) ghcr.io/$GITHUB_REPOSITORY:latest
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
