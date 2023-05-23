@@ -6,6 +6,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    permissions:
+      packages: write
+
     steps:
       - uses: actions/checkout@v3
 
@@ -22,3 +25,15 @@ jobs:
         run: |
           docker tag $(cat imagename) "ghcr.io/$(echo $GITHUB_REPOSITORY):$(echo $PACKAGE_VERSION)"
           docker tag $(cat imagename) "ghcr.io/$(echo $GITHUB_REPOSITORY):latest"
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push Docker images
+        run: |
+          docker push "ghcr.io/$(echo $GITHUB_REPOSITORY):$(echo $PACKAGE_VERSION)"
+          docker push "ghcr.io/$(echo $GITHUB_REPOSITORY):latest"
