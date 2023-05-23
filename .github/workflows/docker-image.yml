@@ -1,9 +1,6 @@
 name: Build Docker Image
 
-on:
-  push:
-    tags:
-      - '*'
+on: push
 
 jobs:
   build:
@@ -17,8 +14,6 @@ jobs:
         uses: martinbeentjes/npm-get-version-action@v1.3.1
 
       - name: Build the Docker image
-        # env:
-        #   DOCKER_BUILDKIT: 1
         run: docker buildx build --platform linux/amd64 --iidfile imagename .
 
       - name: Tag the Docker image
